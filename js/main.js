@@ -12,7 +12,7 @@ var PIN = {
 var mapElement = document.querySelector('.map');
 var mapFilters = mapElement.querySelector('.map__filters');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var pinsList = document.querySelector('.map__pins');
+var pinsList = mapElement.querySelector('.map__pins');
 var mainPin = pinsList.querySelector('.map__pin--main');
 var fragment = document.createDocumentFragment();
 var adForm = document.querySelector('.ad-form');
@@ -22,6 +22,14 @@ var mapWidth = mapElement.offsetWidth;
 
 var getRandomNumber = function (from, to) {
   return Math.floor(Math.random() * (to - from + 1)) + from;
+};
+
+var addClass = function (element, elClass) {
+  element.classList.add(elClass);
+};
+
+var removeClass = function (element, elClass) {
+  element.classList.remove(elClass);
 };
 
 var getOffersData = function (quantity) {
@@ -77,46 +85,35 @@ var activePageStateHandler = function () {
   mainPin.removeEventListener('click', activePageStateHandler);
 };
 
-var disableFieldsets = function (state) {
+var toggleFieldsetsState = function () {
   for (var i = 0; i < adFormFieldsets.length; i++) {
-    adFormFieldsets[i].disabled = state;
+    adFormFieldsets[i].disabled = !adFormFieldsets[i].disabled;
   }
 };
 
 var inactivePageState = function () {
-  var isEnabled = function (element, elClass) {
-    if (!element.classList.contains(elClass)) {
-      element.classList.add(elClass);
-    }
-  };
-
-  isEnabled(mapElement, 'map--faded');
-  isEnabled(adForm, 'ad-form--disabled');
-  isEnabled(mapFilters, 'map__filters--disabled');
-  disableFieldsets(true);
+  addClass(mapElement, 'map--faded');
+  addClass(adForm, 'ad-form--disabled');
+  addClass(mapFilters, 'map__filters--disabled');
+  toggleFieldsetsState();
 };
 
 var activePageState = function () {
-  var isDisabled = function (element, elClass) {
-    if (element.classList.contains(elClass)) {
-      element.classList.remove(elClass);
-    }
-  };
-
-  isDisabled(mapElement, 'map--faded');
-  isDisabled(adForm, 'ad-form--disabled');
-  isDisabled(mapFilters, 'map__filters--disabled');
-  disableFieldsets(false);
+  removeClass(mapElement, 'map--faded');
+  removeClass(adForm, 'ad-form--disabled');
+  removeClass(mapFilters, 'map__filters--disabled');
+  toggleFieldsetsState();
 };
 
 inactivePageState();
 
+var getMainPinCoordinates = function () {
+  var x = mainPin.style.left + MAIN_PIN.width / 2;
+  var y = mainPin.style.top + MAIN_PIN.height / 2;
+  return parseInt(x, 10) + ', ' + parseInt(y, 10);
+};
+
 mainPin.addEventListener('click', activePageStateHandler);
 mainPin.addEventListener('mouseup', function () {
-  var getMainPinCoordinates = function () {
-    var x = mainPin.style.left + MAIN_PIN.width / 2;
-    var y = mainPin.style.top + MAIN_PIN.height / 2;
-    return parseInt(x, 10) + ', ' + parseInt(y, 10);
-  };
   adFormAddressInput.value = getMainPinCoordinates();
 });
