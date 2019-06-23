@@ -19,6 +19,12 @@ var adForm = document.querySelector('.ad-form');
 var adFormAddressInput = adForm.querySelector('input[name="address"]');
 var adFormFieldsets = adForm.querySelectorAll('.ad-form__element');
 var mapWidth = mapElement.offsetWidth;
+var noticeElement = document.querySelector('.notice');
+var typeSelect = noticeElement.querySelector('#type');
+var timeInSelect = noticeElement.querySelector('#timein');
+var timeOutSelect = noticeElement.querySelector('#timeout');
+var typeSelectOptions = typeSelect.querySelectorAll('option');
+var priceInput = noticeElement.querySelector('#price');
 
 var getRandomNumber = function (from, to) {
   return Math.floor(Math.random() * (to - from + 1)) + from;
@@ -78,6 +84,40 @@ var getPinsElements = function () {
   }
 };
 
+var setMinPriceValue = function (type) {
+  var setValue = function (value) {
+    priceInput.min = value;
+    priceInput.placeholder = value;
+  };
+  switch (type) {
+    case 'bungalo':
+      setValue(0);
+      break;
+    case 'flat':
+      setValue(1000);
+      break;
+    case 'house':
+      setValue(5000);
+      break;
+    case 'palace':
+      setValue(10000);
+      break;
+    default:
+      setValue(100);
+  }
+};
+
+var setSelectedMinPriceValue = function () {
+  for (var i = 0; i < typeSelectOptions.length; i++) {
+    if (typeSelectOptions[i].selected) {
+      setMinPriceValue(typeSelectOptions[i].value);
+      i = typeSelectOptions.length;
+    } else {
+      setMinPriceValue(typeSelectOptions[0].value);
+    }
+  }
+};
+
 var activePageStateHandler = function () {
   activePageState();
   getPinsElements();
@@ -103,6 +143,7 @@ var activePageState = function () {
   removeClass(adForm, 'ad-form--disabled');
   removeClass(mapFilters, 'map__filters--disabled');
   toggleFieldsetsState();
+  setSelectedMinPriceValue();
 };
 
 inactivePageState();
@@ -116,4 +157,13 @@ var getMainPinCoordinates = function () {
 mainPin.addEventListener('click', activePageStateHandler);
 mainPin.addEventListener('mouseup', function () {
   adFormAddressInput.value = getMainPinCoordinates();
+});
+typeSelect.addEventListener('change', function (evt) {
+  setMinPriceValue(evt.target.value);
+});
+timeInSelect.addEventListener('change', function (evt) {
+  timeOutSelect.selectedIndex = evt.target.selectedIndex;
+});
+timeOutSelect.addEventListener('change', function (evt) {
+  timeInSelect.selectedIndex = evt.target.selectedIndex;
 });
