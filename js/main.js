@@ -9,6 +9,13 @@ var PIN = {
   width: 40,
   height: 44
 };
+var MIN_PRICE = {
+  bungalo: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000,
+  default: 100
+};
 var mapElement = document.querySelector('.map');
 var mapFilters = mapElement.querySelector('.map__filters');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -91,19 +98,19 @@ var setMinPriceValue = function (type) {
   };
   switch (type) {
     case 'bungalo':
-      setValue(0);
+      setValue(MIN_PRICE.bungalo);
       break;
     case 'flat':
-      setValue(1000);
+      setValue(MIN_PRICE.flat);
       break;
     case 'house':
-      setValue(5000);
+      setValue(MIN_PRICE.house);
       break;
     case 'palace':
-      setValue(10000);
+      setValue(MIN_PRICE.palace);
       break;
     default:
-      setValue(100);
+      setValue(MIN_PRICE.default);
   }
 };
 
