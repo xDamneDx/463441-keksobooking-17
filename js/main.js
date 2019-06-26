@@ -1,5 +1,7 @@
 'use strict';
 
+var mapElement = document.querySelector('.map');
+
 var QUANTITY_OF_OFFERS = 8;
 var MAIN_PIN = {
   width: 64,
@@ -22,7 +24,7 @@ var MIN_PRICE = {
   palace: 10000,
   default: 100
 };
-var mapElement = document.querySelector('.map');
+
 var mapFilters = mapElement.querySelector('.map__filters');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinsList = mapElement.querySelector('.map__pins');
