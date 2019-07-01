@@ -23,22 +23,7 @@
       priceInput.min = value;
       priceInput.placeholder = value;
     };
-    switch (type) {
-      case 'bungalo':
-        setValue(MIN_PRICE.bungalo);
-        break;
-      case 'flat':
-        setValue(MIN_PRICE.flat);
-        break;
-      case 'house':
-        setValue(MIN_PRICE.house);
-        break;
-      case 'palace':
-        setValue(MIN_PRICE.palace);
-        break;
-      default:
-        setValue(MIN_PRICE.default);
-    }
+    setValue(MIN_PRICE[type]);
   };
 
   var setSelectedMinPriceValue = function () {

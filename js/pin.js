@@ -1,13 +1,11 @@
 'use strict';
 
 (function () {
-  var mapWidth = window.data.mapElement.offsetWidth;
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinsList = window.data.mapElement.querySelector('.map__pins');
   var mainPin = pinsList.querySelector('.map__pin--main');
   var fragment = document.createDocumentFragment();
 
-  var QUANTITY_OF_OFFERS = 8;
   var MAIN_PIN = {
     width: 64,
     height: 86
@@ -16,43 +14,12 @@
     yMin: 130 - MAIN_PIN.height,
     yMax: 630 - MAIN_PIN.height,
     xMin: -MAIN_PIN.width / 2,
-    xMax: mapWidth - MAIN_PIN.width / 2
+    xMax: window.data.mapWidth - MAIN_PIN.width / 2
   };
   var PIN = {
     width: 40,
     height: 44
   };
-
-  var getOffersData = function (quantity) {
-    var offersData = [];
-    var avatarNumber = 0;
-    var getRandomData = function () {
-      var offers = ['palace', 'flat', 'house', 'bungalo'];
-      var getAvatarSrc = function (number) {
-        return 'img/avatars/user' + ((number < 10) ? '0' : '') + number + '.png';
-      };
-      var data = {
-        author: {
-          avatar: getAvatarSrc(avatarNumber + 1)
-        },
-        offer: {
-          type: offers[window.data.getRandomNumber(0, offers.length - 1)]
-        },
-        location: {
-          x: window.data.getRandomNumber(0, mapWidth),
-          y: window.data.getRandomNumber(130, 630)
-        }
-      };
-      return data;
-    };
-    for (var i = 0; i < quantity; i++) {
-      avatarNumber = i;
-      offersData[i] = getRandomData();
-    }
-    return offersData;
-  };
-
-  var offers = getOffersData(QUANTITY_OF_OFFERS);
 
   var renderPin = function (offer) {
     var pinElement = pinTemplate.cloneNode(true);
@@ -64,8 +31,8 @@
   };
 
   var getPinsElements = function () {
-    for (var i = 0; i < offers.length; i++) {
-      fragment.appendChild(renderPin(offers[i]));
+    for (var i = 0; i < window.data.offers.length; i++) {
+      fragment.appendChild(renderPin(window.data.offers[i]));
     }
   };
 
