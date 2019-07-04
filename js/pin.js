@@ -1,7 +1,9 @@
 'use strict';
 
 (function () {
+  var mainElement = document.querySelector('main');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var pinsList = window.data.mapElement.querySelector('.map__pins');
   var mainPin = pinsList.querySelector('.map__pin--main');
   var fragment = document.createDocumentFragment();
@@ -30,10 +32,17 @@
     return pinElement;
   };
 
-  var getPinsElements = function () {
-    for (var i = 0; i < window.data.offers.length; i++) {
-      fragment.appendChild(renderPin(window.data.offers[i]));
+  var successHandler = function (offers) {
+    for (var i = 0; i < offers.length; i++) {
+      fragment.appendChild(renderPin(offers[i]));
     }
+    pinsList.appendChild(fragment);
+  };
+
+  var errorHandler = function (errorMessage) {
+    var error = errorTemplate.cloneNode(true);
+    error.querySelector('.error__message').textContent = errorMessage;
+    mainElement.appendChild(error);
   };
 
   var getMainPinCoordinates = function () {
@@ -45,8 +54,7 @@
   mainPin.addEventListener('mousedown', function (evt) {
     if (!window.main.pageState) {
       window.main.activePageState();
-      getPinsElements();
-      pinsList.appendChild(fragment);
+      window.load.offers(successHandler, errorHandler);
       window.main.pageState = true;
     }
     var startCoords = {
