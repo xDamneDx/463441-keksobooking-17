@@ -4,6 +4,8 @@
   var mapElement = document.querySelector('.map');
   var adForm = document.querySelector('.ad-form');
   var mapWidth = mapElement.offsetWidth;
+  var pinsList = mapElement.querySelector('.map__pins');
+  var fragment = document.createDocumentFragment();
 
   var getRandomNumber = function (from, to) {
     return Math.floor(Math.random() * (to - from + 1)) + from;
@@ -23,6 +25,8 @@
     mapWidth: mapWidth,
     getRandomNumber: getRandomNumber,
     addClass: addClass,
-    removeClass: removeClass
+    removeClass: removeClass,
+    pinsList: pinsList,
+    fragment: fragment
   };
 })();
