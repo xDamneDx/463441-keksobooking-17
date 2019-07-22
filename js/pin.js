@@ -2,11 +2,8 @@
 
 (function () {
   var mainElement = document.querySelector('main');
-  var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  var pinsList = window.data.mapElement.querySelector('.map__pins');
-  var mainPin = pinsList.querySelector('.map__pin--main');
-  var fragment = document.createDocumentFragment();
+  var mainPin = window.data.pinsList.querySelector('.map__pin--main');
 
   var MAIN_PIN = {
     width: 64,
@@ -18,25 +15,28 @@
     xMin: -MAIN_PIN.width / 2,
     xMax: window.data.mapWidth - MAIN_PIN.width / 2
   };
-  var PIN = {
-    width: 40,
-    height: 44
+
+  var offersArray = [];
+  var housingType = 'any';
+
+  window.mapFilters.type = function (type) {
+    housingType = type;
   };
 
-  var renderPin = function (offer) {
-    var pinElement = pinTemplate.cloneNode(true);
-    pinElement.style.left = (offer.location.x - (PIN.width / 2)) + 'px';
-    pinElement.style.top = (offer.location.y - PIN.height) + 'px';
-    pinElement.querySelector('img').src = offer.author.avatar;
-    pinElement.querySelector('img').alt = offer.offer.type;
-    return pinElement;
+  var updatePins = function () {
+    window.render(offersArray.filter(function (offer) {
+      if (housingType === 'any') {
+        return true;
+      } else if (offer.offer.type === housingType) {
+        return true;
+      }
+      return false;
+    }));
   };
 
   var successHandler = function (offers) {
-    for (var i = 0; i < offers.length; i++) {
-      fragment.appendChild(renderPin(offers[i]));
-    }
-    pinsList.appendChild(fragment);
+    offersArray = offers;
+    updatePins();
   };
 
   var errorHandler = function (errorMessage) {
@@ -96,6 +96,7 @@
   });
 
   window.pin = {
-    getMainCoordinates: getMainPinCoordinates
+    getMainCoordinates: getMainPinCoordinates,
+    update: updatePins
   };
 })();
