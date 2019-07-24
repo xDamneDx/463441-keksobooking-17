@@ -37,6 +37,7 @@
   var successHandler = function (offers) {
     offersArray = offers;
     updatePins();
+    window.card.render(offersArray[0]);
   };
 
   var errorHandler = function (errorMessage) {
@@ -97,6 +98,7 @@
 
   window.pin = {
     getMainCoordinates: getMainPinCoordinates,
-    update: updatePins
+    update: updatePins,
+    offersArray: offersArray
   };
 })();
