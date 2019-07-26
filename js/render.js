@@ -13,7 +13,7 @@
     pinElement.style.left = (offer.location.x - (PIN.width / 2)) + 'px';
     pinElement.style.top = (offer.location.y - PIN.height) + 'px';
     pinElement.querySelector('img').src = offer.author.avatar;
-    pinElement.querySelector('img').alt = offer.offer.type;
+    pinElement.querySelector('img').alt = offer.offer.description;
     return pinElement;
   };
 
