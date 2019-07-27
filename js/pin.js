@@ -37,7 +37,6 @@
   var successHandler = function (offers) {
     offersArray = offers;
     updatePins();
-    window.card.render(offersArray[0]);
   };
 
   var errorHandler = function (errorMessage) {
@@ -55,7 +54,7 @@
   mainPin.addEventListener('mousedown', function (evt) {
     if (!window.main.pageState) {
       window.main.activePageState();
-      window.load.offers(successHandler, errorHandler);
+      window.backend.load(successHandler, errorHandler);
       window.main.pageState = true;
     }
     var startCoords = {

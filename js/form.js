@@ -9,6 +9,8 @@
   var timeOutSelect = noticeElement.querySelector('#timeout');
   var typeSelectOptions = typeSelect.querySelectorAll('option');
   var priceInput = noticeElement.querySelector('#price');
+  var roomNumber = noticeElement.querySelector('#room_number');
+  var capacity = noticeElement.querySelector('#capacity');
 
   var MIN_PRICE = {
     bungalo: 0,
@@ -16,6 +18,13 @@
     house: 5000,
     palace: 10000,
     default: 100
+  };
+
+  var ROOMS = {
+    '1': ['1'],
+    '2': ['2', '1'],
+    '3': ['3', '2', '1'],
+    '100': ['0']
   };
 
   var setMinPriceValue = function (type) {
@@ -47,6 +56,15 @@
     adFormAddressInput.value = window.pin.getMainCoordinates();
   };
 
+  var roomsChangesHandler = function () {
+    [].forEach.call(capacity.options, function (item) {
+      item.selected = (ROOMS[roomNumber.value][0] === item.value);
+      item.disabled = !(ROOMS[roomNumber.value].indexOf(item.value) >= 0);
+    });
+  };
+
+  roomsChangesHandler();
+
   typeSelect.addEventListener('change', function (evt) {
     setMinPriceValue(evt.target.value);
   });
@@ -58,6 +76,8 @@
   timeOutSelect.addEventListener('change', function (evt) {
     timeInSelect.selectedIndex = evt.target.selectedIndex;
   });
+
+  roomNumber.addEventListener('change', roomsChangesHandler);
 
   window.form = {
     setSelectedMinPriceValue: setSelectedMinPriceValue,

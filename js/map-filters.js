@@ -10,6 +10,10 @@
 
   housingTypes.addEventListener('change', function (evt) {
     filter.type(evt.target.value);
+    var openedPopup = window.data.mapElement.querySelector('.map__card.popup');
+    if (openedPopup) {
+      openedPopup.remove();
+    }
     window.pin.update();
   });
 
