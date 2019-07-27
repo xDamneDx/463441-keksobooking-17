@@ -32,7 +32,6 @@
       }
       return false;
     }));
-    // console.log(document.querySelector('.map__card.popup'));
   };
 
   var successHandler = function (offers) {
@@ -55,7 +54,7 @@
   mainPin.addEventListener('mousedown', function (evt) {
     if (!window.main.pageState) {
       window.main.activePageState();
-      window.load.offers(successHandler, errorHandler);
+      window.backend.load(successHandler, errorHandler);
       window.main.pageState = true;
     }
     var startCoords = {
@@ -94,21 +93,6 @@
     };
     window.data.mapElement.addEventListener('mousemove', mouseMoveHandler);
     window.data.mapElement.addEventListener('mouseup', mouseUpHandler);
-  });
-
-  window.data.pinsList.addEventListener('click', function (evt) {
-    var target = evt.target;
-    while (target !== window.data.pinsList) {
-      if (target.tagName === 'BUTTON' && target.className !== 'map__pin map__pin--main') {
-        var targetAlt = target.firstChild.alt;
-        var selectedOffer = offersArray.filter(function (offer) {
-          return offer.offer.description === targetAlt;
-        });
-        window.card.render(selectedOffer[0]);
-        return;
-      }
-      target = target.parentNode;
-    }
   });
 
   window.pin = {
