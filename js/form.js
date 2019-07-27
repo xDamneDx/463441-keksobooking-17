@@ -11,7 +11,6 @@
   var priceInput = noticeElement.querySelector('#price');
   var roomNumber = noticeElement.querySelector('#room_number');
   var capacity = noticeElement.querySelector('#capacity');
-
   var MIN_PRICE = {
     bungalo: 0,
     flat: 1000,
@@ -19,7 +18,6 @@
     palace: 10000,
     default: 100
   };
-
   var ROOMS = {
     '1': ['1'],
     '2': ['2', '1'],
