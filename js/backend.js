@@ -23,7 +23,7 @@
         onLoad(xhr.response);
       } else {
         if (data) {
-          errorMessage = 'Не удалось отправить форму';
+          errorMessage = 'КАРАМБА! Не удалось отправить форму';
         }
         onError(errorMessage + ' ( ' + xhr.status + ' ' + xhr.statusText + ' )');
       }

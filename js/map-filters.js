@@ -18,4 +18,7 @@
   });
 
   window.mapFilters = filter;
+  window.mapFilters.reset = function () {
+    mapFilters.reset();
+  };
 })();

@@ -38,10 +38,7 @@
   };
 
   window.render = function (data) {
-    var offers = window.data.pinsList.querySelectorAll('.map__pin:not(.map__pin--main)');
-    offers.forEach(function (offer) {
-      offer.remove();
-    });
+    window.pin.removeAll();
     var takeNumber = data.length >= NUM_OF_PINS ? NUM_OF_PINS : data.length;
     for (var i = 0; i < takeNumber; i++) {
       window.data.fragment.appendChild(renderPin(data[i]));
