@@ -3,7 +3,7 @@
 (function () {
   var URL = {
     download: 'https://js.dump.academy/keksobooking/data',
-    upload: 'https://js.dump.academy/keksobooking'
+    upload: 'https://js.dump.academy/keksobookingЫ'
   };
   var XHR_STATUS = {
     ok: 200
@@ -23,7 +23,7 @@
         onLoad(xhr.response);
       } else {
         if (data) {
-          errorMessage = 'Не удалось отправить форму';
+          errorMessage = 'КАРАМБА! Не удалось отправить форму';
         }
         onError(errorMessage + ' ( ' + xhr.status + ' ' + xhr.statusText + ' )');
       }
