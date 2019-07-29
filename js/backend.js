@@ -3,7 +3,7 @@
 (function () {
   var URL = {
     download: 'https://js.dump.academy/keksobooking/data',
-    upload: 'https://js.dump.academy/keksobookingЫ'
+    upload: 'https://js.dump.academy/keksobooking'
   };
   var XHR_STATUS = {
     ok: 200
