@@ -9,6 +9,7 @@
     'house': 'Дом',
     'palace': 'Дворец'
   };
+
   var renderCard = function (data) {
     var card = cardTemplate.cloneNode(true);
     var futuresList = card.querySelector('.popup__features');
