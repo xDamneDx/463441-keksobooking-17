@@ -24,12 +24,13 @@
     window.form.setSelectedMinPriceValue();
   };
 
+  mapFilters.addEventListener('change', function () {
+    window.pin.update();
+  });
+
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.data.keyCode.esc) {
-      if (main.querySelector('.map__card.popup')) {
-        main.querySelector('.map__card.popup').remove();
-        main.querySelector('.map__pin.map__pin--active').classList.remove('map__pin--active');
-      }
+      window.card.remove();
       if (main.querySelector('.success')) {
         main.querySelector('.success').remove();
       }

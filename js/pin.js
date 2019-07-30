@@ -22,25 +22,13 @@
   };
 
   var offersArray = [];
-  var housingType;
-
-  window.mapFilters.type = function (type) {
-    housingType = type;
-  };
 
   var updatePins = function () {
-    window.render(offersArray.filter(function (offer) {
-      if (housingType === 'any') {
-        return true;
-      } else if (offer.offer.type === housingType) {
-        return true;
-      }
-      return false;
-    }));
+    window.render(window.mapFilters(offersArray));
   };
 
   var successHandler = function (offers) {
-    offersArray = offers;
+    offersArray = offers.slice();
     updatePins();
   };
 
@@ -83,7 +71,6 @@
   mainPin.addEventListener('mousedown', function (evt) {
     if (!window.main.pageState) {
       window.main.activePageState();
-      housingType = 'any';
       window.backend.load(successHandler, errorHandler);
       window.main.pageState = true;
     }
@@ -118,7 +105,6 @@
     update: updatePins,
     offersArray: offersArray,
     removeAll: removePins,
-    housingType: housingType,
     resetMainPin: setMainPinStartCoordinates
   };
 })();
