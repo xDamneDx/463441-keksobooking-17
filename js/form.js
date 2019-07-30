@@ -92,6 +92,7 @@
       activePin.classList.remove('map__pin--active');
     }
     form.reset();
+    window.mediaLoader.clear();
     window.main.inactivePageState();
     window.main.pageState = false;
   };

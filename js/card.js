@@ -86,5 +86,16 @@
       popupCloseButton.addEventListener('click', closePopup);
     }
   };
-  window.card.render = renderCard;
+
+  var removeCard = function () {
+    if (window.data.mapElement.querySelector('.map__card.popup')) {
+      window.data.mapElement.querySelector('.map__card.popup').remove();
+      window.data.mapElement.querySelector('.map__pin.map__pin--active').classList.remove('map__pin--active');
+    }
+  };
+
+  window.card = {
+    render: renderCard,
+    remove: removeCard
+  };
 })();

@@ -37,7 +37,8 @@
     return pinElement;
   };
 
-  window.render = function (data) {
+  var renderPins = function (data) {
+    window.card.remove();
     window.pin.removeAll();
     var takeNumber = data.length >= NUM_OF_PINS ? NUM_OF_PINS : data.length;
     for (var i = 0; i < takeNumber; i++) {
@@ -45,4 +46,6 @@
     }
     window.data.pinsList.appendChild(window.data.fragment);
   };
+
+  window.render = window.debounce(renderPins);
 })();
