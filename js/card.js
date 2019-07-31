@@ -2,7 +2,7 @@
 
 (function () {
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-  var mapFiltersContainerElement = window.data.mapElement.querySelector('.map__filters-container');
+  var mapFiltersContainer = window.data.map.querySelector('.map__filters-container');
   var typeMap = {
     'flat': 'Квартира',
     'bungalo': 'Бунгало',
@@ -12,16 +12,16 @@
 
   var renderCard = function (data) {
     var card = cardTemplate.cloneNode(true);
-    var futuresListElement = card.querySelector('.popup__features');
-    var futuresElements = futuresListElement.querySelectorAll('li');
-    var photosListElement = card.querySelector('.popup__photos');
-    var popupCloseButtonElement = card.querySelector('.popup__close');
+    var futuresList = card.querySelector('.popup__features');
+    var futures = futuresList.querySelectorAll('li');
+    var photosList = card.querySelector('.popup__photos');
+    var popupCloseButton = card.querySelector('.popup__close');
 
-    futuresElements.forEach(function (future) {
+    futures.forEach(function (future) {
       future.remove();
     });
 
-    photosListElement.querySelector('img').remove();
+    photosList.querySelector('img').remove();
 
     if (data.offer) {
       if (data.offer.title) {
@@ -51,22 +51,22 @@
       }
       if (data.offer.features) {
         data.offer.features.forEach(function (feature) {
-          var newLiElement = document.createElement('li');
-          newLiElement.classList.add('popup__feature', 'popup__feature--' + feature);
-          futuresListElement.appendChild(newLiElement);
+          var newLi = document.createElement('li');
+          newLi.classList.add('popup__feature', 'popup__feature--' + feature);
+          futuresList.appendChild(newLi);
         });
       } else {
         card.querySelector('.popup__features').remove();
       }
       if (data.offer.photos) {
         data.offer.photos.forEach(function (photo) {
-          var newImgElement = document.createElement('img');
-          newImgElement.classList.add('popup__photo');
-          newImgElement.src = photo;
-          newImgElement.width = '45';
-          newImgElement.height = '40';
-          newImgElement.alt = 'Фотография жилья';
-          photosListElement.appendChild(newImgElement);
+          var newImg = document.createElement('img');
+          newImg.classList.add('popup__photo');
+          newImg.src = photo;
+          newImg.width = '45';
+          newImg.height = '40';
+          newImg.alt = 'Фотография жилья';
+          photosList.appendChild(newImg);
         });
       } else {
         card.querySelector('.popup__photos').remove();
@@ -78,19 +78,19 @@
       }
       card.querySelector('.popup__avatar').src = data.author.avatar;
 
-      window.data.mapElement.insertBefore(card, mapFiltersContainerElement);
-      popupCloseButtonElement.addEventListener('click', function () {
-        var activePinElement = window.data.mapElement.querySelector('.map__pin.map__pin--active');
+      window.data.map.insertBefore(card, mapFiltersContainer);
+      popupCloseButton.addEventListener('click', function () {
+        var activePin = window.data.map.querySelector('.map__pin.map__pin--active');
         card.remove();
-        activePinElement.classList.remove('map__pin--active');
+        activePin.classList.remove('map__pin--active');
       });
     }
   };
 
   var removeCard = function () {
-    if (window.data.mapElement.querySelector('.map__card.popup')) {
-      window.data.mapElement.querySelector('.map__card.popup').remove();
-      window.data.mapElement.querySelector('.map__pin.map__pin--active').classList.remove('map__pin--active');
+    if (window.data.map.querySelector('.map__card.popup')) {
+      window.data.map.querySelector('.map__card.popup').remove();
+      window.data.map.querySelector('.map__pin.map__pin--active').classList.remove('map__pin--active');
     }
   };
 

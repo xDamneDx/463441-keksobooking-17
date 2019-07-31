@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var mapFiltersElement = document.querySelector('.map__filters');
-  var filterElements = Array.from(mapFiltersElement.children);
+  var mapFilters = document.querySelector('.map__filters');
+  var filters = Array.from(mapFilters.children);
   var priceMap = {
     'low': {
       start: 0,
@@ -32,9 +32,9 @@
       return filter.value === data.offer.guests.toString();
     },
     'housing-features': function (data, filter) {
-      var checkListElements = Array.from(filter.querySelectorAll('input[type=checkbox]:checked'));
+      var checkLists = Array.from(filter.querySelectorAll('input[type=checkbox]:checked'));
 
-      return checkListElements.every(function (it) {
+      return checkLists.every(function (it) {
         return data.offer.features.some(function (feature) {
           return feature === it.value;
         });
@@ -44,7 +44,7 @@
 
   var filterData = function (data) {
     return data.filter(function (offer) {
-      return filterElements.every(function (select) {
+      return filters.every(function (select) {
         return (select.value === 'any') ? true : filterRules[select.id](offer, select);
       });
     });
@@ -52,6 +52,6 @@
 
   window.mapFilters = filterData;
   window.mapFilters.reset = function () {
-    mapFiltersElement.reset();
+    mapFilters.reset();
   };
 })();
