@@ -58,7 +58,11 @@
   };
 
   var setFormAddressInputValue = function () {
-    adFormAddressInput.value = window.pin.getMainCoordinates();
+    if (window.data.pageState) {
+      adFormAddressInput.value = window.pin.getMainCoordinates();
+    } else {
+      adFormAddressInput.value = window.pin.getMainInactiveCoordinates();
+    }
   };
 
   var roomsChangesHandler = function () {
@@ -93,8 +97,8 @@
     }
     form.reset();
     window.mediaLoader.clear();
+    window.data.pageState = false;
     window.main.inactivePageState();
-    window.main.pageState = false;
   };
 
   resetButton.addEventListener('click', resetPage);

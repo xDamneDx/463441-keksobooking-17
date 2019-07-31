@@ -3,7 +3,6 @@
 (function () {
   var main = document.querySelector('main');
   var mapFilters = main.querySelector('.map__filters');
-  var isPageActive = false;
 
   var inactivePageState = function () {
     window.data.mapElement.classList.add('map--faded');
@@ -20,7 +19,6 @@
     window.data.mapElement.classList.remove('map--faded');
     window.data.formElement.classList.remove('ad-form--disabled');
     mapFilters.classList.remove('map__filters--disabled');
-    window.form.toggleFieldsetsState();
     window.form.setSelectedMinPriceValue();
   };
 
@@ -43,7 +41,6 @@
   inactivePageState();
 
   window.main = {
-    pageState: isPageActive,
     activePageState: activePageState,
     inactivePageState: inactivePageState
   };

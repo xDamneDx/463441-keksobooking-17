@@ -8,6 +8,10 @@
   var MAIN_PIN = {
     width: 65,
     height: 87,
+    inactive: {
+      width: 65,
+      height: 65
+    },
     startCoords: {
       top: mainPin.style.top,
       left: mainPin.style.left
@@ -30,6 +34,7 @@
   var successHandler = function (offers) {
     offersArray = offers.slice();
     updatePins();
+    window.form.toggleFieldsetsState();
   };
 
   var errorHandler = function (errorMessage) {
@@ -41,6 +46,12 @@
   var getMainPinCoordinates = function () {
     var x = parseInt(mainPin.style.left, 10) + Math.round(MAIN_PIN.width / 2);
     var y = parseInt(mainPin.style.top, 10) + MAIN_PIN.height;
+    return x + ', ' + y;
+  };
+
+  var getInactiveMainPinCoordinates = function () {
+    var x = parseInt(mainPin.style.left, 10) + Math.round(MAIN_PIN.inactive.width / 2);
+    var y = parseInt(mainPin.style.top, 10) + Math.round(MAIN_PIN.inactive.height / 2);
     return x + ', ' + y;
   };
 
@@ -68,12 +79,22 @@
     });
   };
 
-  mainPin.addEventListener('mousedown', function (evt) {
-    if (!window.main.pageState) {
+  var activateIfNotActive = function () {
+    if (!window.data.pageState) {
       window.main.activePageState();
       window.backend.load(successHandler, errorHandler);
-      window.main.pageState = true;
+      window.data.pageState = true;
     }
+  };
+
+  mainPin.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === window.data.keyCode.enter) {
+      activateIfNotActive();
+    }
+  });
+
+  mainPin.addEventListener('mousedown', function (evt) {
+    activateIfNotActive();
     var startCoords = {
       x: evt.clientX,
       y: evt.clientY
@@ -102,6 +123,7 @@
 
   window.pin = {
     getMainCoordinates: getMainPinCoordinates,
+    getMainInactiveCoordinates: getInactiveMainPinCoordinates,
     update: updatePins,
     offersArray: offersArray,
     removeAll: removePins,

@@ -6,6 +6,7 @@
   var mapWidth = mapElement.offsetWidth;
   var pinsList = mapElement.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
+  var isPageActive = false;
 
   var KEYCODE = {
     enter: 13,
@@ -23,6 +24,7 @@
     getRandomNumber: getRandomNumber,
     pinsList: pinsList,
     fragment: fragment,
+    pageState: isPageActive,
     keyCode: KEYCODE
   };
 })();
