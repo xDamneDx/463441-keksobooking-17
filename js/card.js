@@ -2,7 +2,7 @@
 
 (function () {
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-  var mapFiltersContainer = window.data.mapElement.querySelector('.map__filters-container');
+  var mapFiltersContainerElement = window.data.mapElement.querySelector('.map__filters-container');
   var typeMap = {
     'flat': 'Квартира',
     'bungalo': 'Бунгало',
@@ -12,21 +12,16 @@
 
   var renderCard = function (data) {
     var card = cardTemplate.cloneNode(true);
-    var futuresList = card.querySelector('.popup__features');
-    var futures = futuresList.querySelectorAll('li');
-    var imgList = card.querySelector('.popup__photos');
-    var popupCloseButton = card.querySelector('.popup__close');
+    var futuresListElement = card.querySelector('.popup__features');
+    var futuresElements = futuresListElement.querySelectorAll('li');
+    var photosListElement = card.querySelector('.popup__photos');
+    var popupCloseButtonElement = card.querySelector('.popup__close');
 
-    var closePopup = function () {
-      var activePin = window.data.mapElement.querySelector('.map__pin.map__pin--active');
-      card.remove();
-      activePin.classList.remove('map__pin--active');
-    };
-
-    futures.forEach(function (future) {
+    futuresElements.forEach(function (future) {
       future.remove();
     });
-    imgList.querySelector('img').remove();
+
+    photosListElement.querySelector('img').remove();
 
     if (data.offer) {
       if (data.offer.title) {
@@ -58,7 +53,7 @@
         data.offer.features.forEach(function (feature) {
           var newLiElement = document.createElement('li');
           newLiElement.classList.add('popup__feature', 'popup__feature--' + feature);
-          futuresList.appendChild(newLiElement);
+          futuresListElement.appendChild(newLiElement);
         });
       } else {
         card.querySelector('.popup__features').remove();
@@ -71,7 +66,7 @@
           newImgElement.width = '45';
           newImgElement.height = '40';
           newImgElement.alt = 'Фотография жилья';
-          imgList.appendChild(newImgElement);
+          photosListElement.appendChild(newImgElement);
         });
       } else {
         card.querySelector('.popup__photos').remove();
@@ -83,8 +78,12 @@
       }
       card.querySelector('.popup__avatar').src = data.author.avatar;
 
-      window.data.mapElement.insertBefore(card, mapFiltersContainer);
-      popupCloseButton.addEventListener('click', closePopup);
+      window.data.mapElement.insertBefore(card, mapFiltersContainerElement);
+      popupCloseButtonElement.addEventListener('click', function () {
+        var activePinElement = window.data.mapElement.querySelector('.map__pin.map__pin--active');
+        card.remove();
+        activePinElement.classList.remove('map__pin--active');
+      });
     }
   };
 

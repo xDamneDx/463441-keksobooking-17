@@ -3,7 +3,7 @@
 (function () {
   var mainElement = document.querySelector('main');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  var mainPin = window.data.pinsList.querySelector('.map__pin--main');
+  var mainPinElement = window.data.pinsListElement.querySelector('.map__pin--main');
 
   var MAIN_PIN = {
     width: 65,
@@ -13,8 +13,8 @@
       height: 65
     },
     startCoords: {
-      top: mainPin.style.top,
-      left: mainPin.style.left
+      top: mainPinElement.style.top,
+      left: mainPinElement.style.left
     }
   };
 
@@ -44,57 +44,57 @@
   };
 
   var getMainPinCoordinates = function () {
-    var x = parseInt(mainPin.style.left, 10) + Math.round(MAIN_PIN.width / 2);
-    var y = parseInt(mainPin.style.top, 10) + MAIN_PIN.height;
+    var x = parseInt(mainPinElement.style.left, 10) + Math.round(MAIN_PIN.width / 2);
+    var y = parseInt(mainPinElement.style.top, 10) + MAIN_PIN.height;
     return x + ', ' + y;
   };
 
   var getInactiveMainPinCoordinates = function () {
-    var x = parseInt(mainPin.style.left, 10) + Math.round(MAIN_PIN.inactive.width / 2);
-    var y = parseInt(mainPin.style.top, 10) + Math.round(MAIN_PIN.inactive.height / 2);
+    var x = parseInt(mainPinElement.style.left, 10) + Math.round(MAIN_PIN.inactive.width / 2);
+    var y = parseInt(mainPinElement.style.top, 10) + Math.round(MAIN_PIN.inactive.height / 2);
     return x + ', ' + y;
   };
 
   var setMainPinStartCoordinates = function () {
-    mainPin.style.top = MAIN_PIN.startCoords.top;
-    mainPin.style.left = MAIN_PIN.startCoords.left;
+    mainPinElement.style.top = MAIN_PIN.startCoords.top;
+    mainPinElement.style.left = MAIN_PIN.startCoords.left;
   };
 
   var correctMainPinCoordinates = function () {
-    if (mainPin.offsetLeft < MAIN_PIN_LIMITS.xMin) {
-      mainPin.style.left = MAIN_PIN_LIMITS.xMin + 'px';
-    } else if (mainPin.offsetLeft > MAIN_PIN_LIMITS.xMax) {
-      mainPin.style.left = MAIN_PIN_LIMITS.xMax + 'px';
-    } else if (mainPin.offsetTop < MAIN_PIN_LIMITS.yMin) {
-      mainPin.style.top = MAIN_PIN_LIMITS.yMin + 'px';
-    } else if (mainPin.offsetTop > MAIN_PIN_LIMITS.yMax) {
-      mainPin.style.top = MAIN_PIN_LIMITS.yMax + 'px';
+    if (mainPinElement.offsetLeft < MAIN_PIN_LIMITS.xMin) {
+      mainPinElement.style.left = MAIN_PIN_LIMITS.xMin + 'px';
+    } else if (mainPinElement.offsetLeft > MAIN_PIN_LIMITS.xMax) {
+      mainPinElement.style.left = MAIN_PIN_LIMITS.xMax + 'px';
+    } else if (mainPinElement.offsetTop < MAIN_PIN_LIMITS.yMin) {
+      mainPinElement.style.top = MAIN_PIN_LIMITS.yMin + 'px';
+    } else if (mainPinElement.offsetTop > MAIN_PIN_LIMITS.yMax) {
+      mainPinElement.style.top = MAIN_PIN_LIMITS.yMax + 'px';
     }
   };
 
   var removePins = function () {
-    var allPins = window.data.pinsList.querySelectorAll('.map__pin:not(.map__pin--main)');
-    allPins.forEach(function (pin) {
+    var pinElements = window.data.pinsListElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pinElements.forEach(function (pin) {
       pin.remove();
     });
   };
 
-  var activateIfNotActive = function () {
+  var activatePageIfNotActive = function () {
     if (!window.data.pageState) {
-      window.main.activePageState();
+      window.map.activePageState();
       window.backend.load(successHandler, errorHandler);
       window.data.pageState = true;
     }
   };
 
-  mainPin.addEventListener('keydown', function (evt) {
+  mainPinElement.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.data.keyCode.enter) {
-      activateIfNotActive();
+      activatePageIfNotActive();
     }
   });
 
-  mainPin.addEventListener('mousedown', function (evt) {
-    activateIfNotActive();
+  mainPinElement.addEventListener('mousedown', function (evt) {
+    activatePageIfNotActive();
     var startCoords = {
       x: evt.clientX,
       y: evt.clientY
@@ -108,8 +108,8 @@
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
-      mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
-      mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+      mainPinElement.style.top = (mainPinElement.offsetTop - shift.y) + 'px';
+      mainPinElement.style.left = (mainPinElement.offsetLeft - shift.x) + 'px';
       correctMainPinCoordinates();
     };
     var mouseUpHandler = function () {

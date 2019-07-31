@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var mapFilters = document.querySelector('.map__filters');
-  var filterElements = Array.from(mapFilters.children);
+  var mapFiltersElement = document.querySelector('.map__filters');
+  var filterElements = Array.from(mapFiltersElement.children);
   var priceMap = {
     'low': {
       start: 0,
@@ -52,6 +52,6 @@
 
   window.mapFilters = filterData;
   window.mapFilters.reset = function () {
-    mapFilters.reset();
+    mapFiltersElement.reset();
   };
 })();

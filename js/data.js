@@ -1,10 +1,11 @@
 'use strict';
 
 (function () {
+  var mainElement = document.querySelector('main');
   var mapElement = document.querySelector('.map');
-  var adForm = document.querySelector('.ad-form');
+  var adFormElement = document.querySelector('.ad-form');
   var mapWidth = mapElement.offsetWidth;
-  var pinsList = mapElement.querySelector('.map__pins');
+  var pinsListElement = mapElement.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
   var isPageActive = false;
 
@@ -18,11 +19,12 @@
   };
 
   window.data = {
+    mainElement: mainElement,
     mapElement: mapElement,
-    formElement: adForm,
+    formElement: adFormElement,
     mapWidth: mapWidth,
     getRandomNumber: getRandomNumber,
-    pinsList: pinsList,
+    pinsListElement: pinsListElement,
     fragment: fragment,
     pageState: isPageActive,
     keyCode: KEYCODE

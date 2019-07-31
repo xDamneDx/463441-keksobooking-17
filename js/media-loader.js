@@ -2,14 +2,14 @@
 
 (function () {
   var FILE_TYPES = ['jpg', 'jpeg', 'png'];
-  var photoContainer = document.querySelector('.ad-form__photo-container');
-  var avatarFileChooser = document.querySelector('.ad-form-header__upload input[type=file]');
-  var photoFileChooser = document.querySelector('.ad-form__upload input[type=file]');
-  var avatarPreview = document.querySelector('.ad-form-header__upload').querySelector('img');
-  var defaultAvatar = avatarPreview.src;
+  var photoContainerElement = window.data.formElement.querySelector('.ad-form__photo-container');
+  var avatarFileChooserElement = window.data.formElement.querySelector('.ad-form-header__upload input[type=file]');
+  var photoFileChooserElement = window.data.formElement.querySelector('.ad-form__upload input[type=file]');
+  var avatarPreviewElement = window.data.formElement.querySelector('.ad-form-header__upload').querySelector('img');
+  var defaultAvatar = avatarPreviewElement.src;
 
-  avatarFileChooser.addEventListener('change', function () {
-    var file = avatarFileChooser.files[0];
+  avatarFileChooserElement.addEventListener('change', function () {
+    var file = avatarFileChooserElement.files[0];
     var fileName = file.name.toLowerCase();
 
     var matches = FILE_TYPES.some(function (it) {
@@ -20,15 +20,15 @@
       var reader = new FileReader();
 
       reader.addEventListener('load', function () {
-        avatarPreview.src = reader.result;
+        avatarPreviewElement.src = reader.result;
       });
 
       reader.readAsDataURL(file);
     }
   });
 
-  photoFileChooser.addEventListener('change', function () {
-    var file = photoFileChooser.files[0];
+  photoFileChooserElement.addEventListener('change', function () {
+    var file = photoFileChooserElement.files[0];
     var fileName = file.name.toLowerCase();
 
     var matches = FILE_TYPES.some(function (it) {
@@ -39,15 +39,15 @@
       var reader = new FileReader();
 
       reader.addEventListener('load', function () {
-        var newDiv = document.createElement('div');
-        var newImage = document.createElement('img');
-        newDiv.classList.add('ad-form__photo');
-        newImage.width = '70';
-        newImage.height = '70';
-        newImage.alt = 'Фотография жилья';
-        newImage.src = reader.result;
-        newDiv.appendChild(newImage);
-        photoContainer.insertBefore(newDiv, photoContainer.querySelector('.ad-form__photo'));
+        var newDivElement = document.createElement('div');
+        var newImgElement = document.createElement('img');
+        newDivElement.classList.add('ad-form__photo');
+        newImgElement.width = '70';
+        newImgElement.height = '70';
+        newImgElement.alt = 'Фотография жилья';
+        newImgElement.src = reader.result;
+        newDivElement.appendChild(newImgElement);
+        photoContainerElement.insertBefore(newDivElement, photoContainerElement.querySelector('.ad-form__photo'));
       });
 
       reader.readAsDataURL(file);
@@ -55,11 +55,11 @@
   });
 
   var clearLoader = function () {
-    var allPhotos = photoContainer.querySelectorAll('.ad-form__photo:not(:last-child)');
-    allPhotos.forEach(function (photo) {
+    var allPhotoElements = photoContainerElement.querySelectorAll('.ad-form__photo:not(:last-child)');
+    allPhotoElements.forEach(function (photo) {
       photo.remove();
     });
-    avatarPreview.src = defaultAvatar;
+    avatarPreviewElement.src = defaultAvatar;
   };
 
   window.mediaLoader = {
