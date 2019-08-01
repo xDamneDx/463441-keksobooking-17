@@ -2,10 +2,10 @@
 
 (function () {
   var FILE_TYPES = ['jpg', 'jpeg', 'png'];
-  var photoContainer = document.querySelector('.ad-form__photo-container');
-  var avatarFileChooser = document.querySelector('.ad-form-header__upload input[type=file]');
-  var photoFileChooser = document.querySelector('.ad-form__upload input[type=file]');
-  var avatarPreview = document.querySelector('.ad-form-header__upload').querySelector('img');
+  var photoContainer = window.data.form.querySelector('.ad-form__photo-container');
+  var avatarFileChooser = window.data.form.querySelector('.ad-form-header__upload input[type=file]');
+  var photoFileChooser = window.data.form.querySelector('.ad-form__upload input[type=file]');
+  var avatarPreview = window.data.form.querySelector('.ad-form-header__upload').querySelector('img');
   var defaultAvatar = avatarPreview.src;
 
   avatarFileChooser.addEventListener('change', function () {
@@ -40,13 +40,13 @@
 
       reader.addEventListener('load', function () {
         var newDiv = document.createElement('div');
-        var newImage = document.createElement('img');
+        var newImg = document.createElement('img');
         newDiv.classList.add('ad-form__photo');
-        newImage.width = '70';
-        newImage.height = '70';
-        newImage.alt = 'Фотография жилья';
-        newImage.src = reader.result;
-        newDiv.appendChild(newImage);
+        newImg.width = '70';
+        newImg.height = '70';
+        newImg.alt = 'Фотография жилья';
+        newImg.src = reader.result;
+        newDiv.appendChild(newImg);
         photoContainer.insertBefore(newDiv, photoContainer.querySelector('.ad-form__photo'));
       });
 
