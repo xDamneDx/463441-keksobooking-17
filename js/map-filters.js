@@ -42,15 +42,13 @@
     }
   };
 
-  var filterData = function (data) {
+  window.mapFilters = function (data) {
     return data.filter(function (offer) {
       return filters.every(function (select) {
         return (select.value === 'any') ? true : filterRules[select.id](offer, select);
       });
     });
   };
-
-  window.mapFilters = filterData;
   window.mapFilters.reset = function () {
     mapFilters.reset();
   };
